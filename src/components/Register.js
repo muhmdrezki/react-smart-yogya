@@ -2,6 +2,17 @@ import React, { Component } from 'react'
 import { Container, Header, Content, Input, Item, Button, Body, Title, Label, Text } from 'native-base';
 
 export default class SignupPage extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: '',
+      email: '',
+      password: '',
+      confirm_password: ''
+    };
+  }
+
   render() {
     /* styling */
     const appContainer = {
@@ -32,7 +43,7 @@ export default class SignupPage extends Component {
             <Label> Confirm Password </Label>
             <Input secureTextEntry/>
           </Item>
-          <Button rounded block primary style={formControl}><Text> Register </Text></Button>
+          <Button rounded block danger style={formControl}><Text> Register </Text></Button>
         </Content>
       </Container>
     )

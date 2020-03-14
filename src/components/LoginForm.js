@@ -6,8 +6,9 @@ import { API_URL } from 'react-native-dotenv'
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
+import { withNavigation } from 'react-navigation';
 
-export default class FormLogin extends Component {
+class FormLogin extends React.Component {
   
   constructor(props) {
     super(props);
@@ -54,6 +55,7 @@ export default class FormLogin extends Component {
   }
 
   render() {
+    console.log(this.props.navigation)
     /* styling */
     const appContainer = {
       padding : '5%'
@@ -74,7 +76,7 @@ export default class FormLogin extends Component {
             <Label> Password </Label>
             <Input secureTextEntry onChangeText={this.passwordInput}/>
           </Item>
-          <Button onPress={this.login.bind(this)} rounded block primary title="Login" style={{ marginBottom: '5%' }}><Text>Login</Text></Button>
+          <Button onPress={this.login.bind(this)} rounded block primary title="Login" style={{ marginBottom: '5%', backgroundColor: '#c22b2b' }}><Text>Login</Text></Button>
           {/* <ToHome screenName="Home"/> */}
           <ToRegister screenName="Register"/>
         </Content>
@@ -84,10 +86,12 @@ export default class FormLogin extends Component {
   }
 }
 
+export default withNavigation(FormLogin)
+
 function ToRegister({ screenName }) {
   const navigation = useNavigation();
   return (
-    <Button bordered rounded block primary title="Register" 
+    <Button bordered rounded danger block title="Register" 
     onPress={() => navigation.navigate(screenName)}><Text>Register</Text></Button>
   );
 }

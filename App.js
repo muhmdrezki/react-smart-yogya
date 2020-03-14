@@ -51,7 +51,7 @@ export default class App extends React.Component {
         <NavigationContainer>
           <stack.Navigator screenOptions={{ 
             headerStyle: {
-              backgroundColor: '#3F51B5',
+              backgroundColor: '#c22b2b',
             },
             headerTintColor: '#fff',
           }}>
