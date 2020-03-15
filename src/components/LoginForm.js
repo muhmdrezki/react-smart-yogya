@@ -76,8 +76,8 @@ class FormLogin extends React.Component {
             <Label> Password </Label>
             <Input secureTextEntry onChangeText={this.passwordInput}/>
           </Item>
-          <Button onPress={this.login.bind(this)} rounded block primary title="Login" style={{ marginBottom: '5%', backgroundColor: '#c22b2b' }}><Text>Login</Text></Button>
-          {/* <ToHome screenName="Home"/> */}
+          {/* <Button onPress={this.login.bind(this)} rounded block primary title="Login" style={{ marginBottom: '5%', backgroundColor: '#c22b2b' }}><Text>Login</Text></Button> */}
+          <ToHome screenName="Home"/>
           <ToRegister screenName="Register"/>
         </Content>
       </Container>
@@ -86,7 +86,7 @@ class FormLogin extends React.Component {
   }
 }
 
-export default withNavigation(FormLogin)
+export default FormLogin;
 
 function ToRegister({ screenName }) {
   const navigation = useNavigation();
@@ -99,7 +99,7 @@ function ToRegister({ screenName }) {
 function ToHome({ screenName }) {
   const navigation = useNavigation();
   return (
-    <Button rounded block primary title="Login"
+    <Button rounded block danger title="Login"
     onPress={() => navigation.navigate(screenName)} style={{ marginBottom: '5%' }}><Text>Login</Text></Button>
   );
 }

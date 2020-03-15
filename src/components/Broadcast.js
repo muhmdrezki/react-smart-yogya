@@ -10,7 +10,7 @@ export default class BroadcastPage extends Component {
   getBroadCast() {
     var config = {
       headers : {
-        "Authorization" : "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wveW9neWEudGVjaHNvbHV0aW9uaWQuY29tXC9hcGlcL2xvZ2luIiwiaWF0IjoxNTg0MTk3NTQzLCJleHAiOjE1ODQyMDExNDMsIm5iZiI6MTU4NDE5NzU0MywianRpIjoiT3M3T2NGdGtqcjI0blowTSIsInN1YiI6MTEsInBydiI6Ijg3ZTBhZjFlZjlmZDE1ODEyZmRlYzk3MTUzYTE0ZTBiMDQ3NTQ2YWEifQ.SWLRl2AFKfu7VIKLGu3hygsMPY8c9deGTik0Oyugnzg"
+        "Authorization" : "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wveW9neWEudGVjaHNvbHV0aW9uaWQuY29tXC9hcGlcL2xvZ2luIiwiaWF0IjoxNTg0MjAyNjk3LCJleHAiOjE1ODQyMDYyOTcsIm5iZiI6MTU4NDIwMjY5NywianRpIjoiaUdzbUpBMlJoejJhYVNPcCIsInN1YiI6MTEsInBydiI6Ijg3ZTBhZjFlZjlmZDE1ODEyZmRlYzk3MTUzYTE0ZTBiMDQ3NTQ2YWEifQ.IBC8bxlq4T-F4g7q2sVzyWXIdrsbvjF573U_vuX9mAg"
       }
     }
     axios.get( API_URL + 'broadcast', config)
@@ -38,7 +38,7 @@ export default class BroadcastPage extends Component {
   }
 
   componentWillMount() {
-    this.getBroadCast();  
+    // this.getBroadCast();  
   }
 
   render() {

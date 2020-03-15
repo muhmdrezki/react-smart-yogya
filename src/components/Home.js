@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image, SafeAreaView, ScrollView, Settings } from 'react-native'; 
+import { Image, SafeAreaView, ScrollView, Settings, StyleSheet  } from 'react-native'; 
 import { Container, Content, List, ListItem, Right, Button, H2, Card, CardItem, Left, Thumbnail, Body, Text, Badge, Icon, Footer, FooterTab } from 'native-base';
 import { SliderBox } from "react-native-image-slider-box";
 
@@ -15,7 +15,7 @@ class MainContent extends Component {
   getArticles() {
     var config = {
       headers : {
-        "Authorization" : "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wveW9neWEudGVjaHNvbHV0aW9uaWQuY29tXC9hcGlcL2xvZ2luIiwiaWF0IjoxNTg0MTk3NTQzLCJleHAiOjE1ODQyMDExNDMsIm5iZiI6MTU4NDE5NzU0MywianRpIjoiT3M3T2NGdGtqcjI0blowTSIsInN1YiI6MTEsInBydiI6Ijg3ZTBhZjFlZjlmZDE1ODEyZmRlYzk3MTUzYTE0ZTBiMDQ3NTQ2YWEifQ.SWLRl2AFKfu7VIKLGu3hygsMPY8c9deGTik0Oyugnzg"
+        "Authorization" : "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wveW9neWEudGVjaHNvbHV0aW9uaWQuY29tXC9hcGlcL2xvZ2luIiwiaWF0IjoxNTg0MjAyNjk3LCJleHAiOjE1ODQyMDYyOTcsIm5iZiI6MTU4NDIwMjY5NywianRpIjoiaUdzbUpBMlJoejJhYVNPcCIsInN1YiI6MTEsInBydiI6Ijg3ZTBhZjFlZjlmZDE1ODEyZmRlYzk3MTUzYTE0ZTBiMDQ3NTQ2YWEifQ.IBC8bxlq4T-F4g7q2sVzyWXIdrsbvjF573U_vuX9mAg"
       }
     }
     axios.get( API_URL + 'articles', config)
@@ -39,12 +39,12 @@ class MainContent extends Component {
         "https://source.unsplash.com/1280x720/?girl",
         "https://source.unsplash.com/1280x720/?tree"
       ],
-      // newest_articles: [
-      //   { id: 1, image: "https://source.unsplash.com/1280x720/?nature" },
-      //   { id: 2, image: "https://source.unsplash.com/1280x720/?water" },
-      //   { id: 3, image: "https://source.unsplash.com/1280x720/?girl" },
-      //   { id: 4, image: "https://source.unsplash.com/1280x720/?tree" }
-      // ],
+      newest_articles: [
+        { id: 1, image: "https://source.unsplash.com/1280x720/?nature" },
+        { id: 2, image: "https://source.unsplash.com/1280x720/?water" },
+        { id: 3, image: "https://source.unsplash.com/1280x720/?girl" },
+        { id: 4, image: "https://source.unsplash.com/1280x720/?tree" }
+      ],
       newest_articles: [],
       other_articles : [
         { id: 1, image: "https://source.unsplash.com/1280x720/?nature" },
@@ -56,7 +56,7 @@ class MainContent extends Component {
   }
 
   componentWillMount() {
-    this.getArticles();
+    // this.getArticles();
   };
 
   render() {
@@ -151,31 +151,40 @@ export default class Home extends Component {
   }
   
   render() {
+    const styles = StyleSheet.create({
+      footer: {
+        backgroundColor: '#c22b2b',
+      },
+      textContent: {
+        fontSize: 20,
+        color: 'red',
+      },
+    });
     /* jsx */
     return (
       <Container>
           { this.renderSelectedTab() }
           <Footer>
-            <FooterTab>
-            <Button vertical active={this.state.selected_tab === 'home'}
+            <FooterTab style={styles.footer}>
+            <Button vertical
                 onPress={() => this.setState({selected_tab: 'home'})}>
-                <Icon name="home" />
-                <Text>Beranda</Text>
+                <Icon style={{ color: '#fff' }} name="home" />
+                <Text style={{ color: '#fff' }}>Beranda</Text>
               </Button>
-              <Button vertical active={this.state.selected_tab === 'profile'}
+              <Button vertical
                 onPress={() => this.setState({selected_tab: 'profile'})}>
-                <Icon name="person" />
-                <Text>Profil</Text>
+                <Icon style={{ color: '#fff' }} name="person" />
+                <Text style={{ color: '#fff' }}>Profil</Text>
               </Button>
-              <Button vertical active={this.state.selected_tab === 'broadcast'}
+              <Button vertical
                  onPress={() => this.setState({selected_tab: 'broadcast'})}>
-                <Icon name="ios-megaphone" />
-                <Text>Pengumuman</Text>
+                <Icon style={{ color: '#fff' }} name="ios-megaphone" />
+                <Text style={{ color: '#fff' }}>Pengumuman</Text>
               </Button>
-              <Button vertical active={this.state.selected_tab === 'setting'}
+              <Button vertical
                 onPress={() => this.setState({selected_tab: 'setting'})}>
-                <Icon active name="settings" />  
-                <Text>Pengaturan</Text>
+                <Icon style={{ color: '#fff' }} active name="settings" />  
+                <Text style={{ color: '#fff' }}>Pengaturan</Text>
               </Button>
             </FooterTab>
           </Footer>

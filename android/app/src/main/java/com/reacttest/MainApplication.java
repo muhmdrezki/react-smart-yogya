@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 
 import com.facebook.react.ReactApplication;
+import com.airbnb.android.react.maps.MapsPackage;
 import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
 import com.th3rdwave.safeareacontext.SafeAreaContextPackage;
 import com.reactnativecommunity.geolocation.GeolocationPackage;
@@ -12,6 +13,7 @@ import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
+import com.airbnb.android.react.maps.MapsPackage; 
 
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
 
@@ -32,6 +34,7 @@ public class MainApplication extends Application implements ReactApplication {
           protected List<ReactPackage> getPackages() {
               return Arrays.asList(
                       new MainReactPackage(),
+                      new MapsPackage(),
             new AsyncStoragePackage(),
             new SafeAreaContextPackage(),
             new GeolocationPackage(),
