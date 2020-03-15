@@ -46,16 +46,25 @@ class FormLogin extends React.Component {
     }, '')
     .then(res => {
       if(res.data.token) {
-        alert('Login Berhasil');
-        navigation.navigate("Home");
+        this.storeData(res.data.token);        
       }
     }).catch(err => {
       alert(err);
     });
   }
 
+  storeData = async(token) => {
+    try {
+      await AsyncStorage.setItem('token', token);
+      alert('Login Berhasil')
+      this.props.navigation.navigate("Home");
+    } catch (error) {
+      // Error saving data
+      console.log(error);
+    }
+  }
+
   render() {
-    console.log(this.props.navigation)
     /* styling */
     const appContainer = {
       padding : '5%'
@@ -76,8 +85,8 @@ class FormLogin extends React.Component {
             <Label> Password </Label>
             <Input secureTextEntry onChangeText={this.passwordInput}/>
           </Item>
-          {/* <Button onPress={this.login.bind(this)} rounded block primary title="Login" style={{ marginBottom: '5%', backgroundColor: '#c22b2b' }}><Text>Login</Text></Button> */}
-          <ToHome screenName="Home"/>
+          <Button onPress={this.login.bind(this)} rounded block primary title="Login" style={{ marginBottom: '5%', backgroundColor: '#c22b2b' }}><Text>Login</Text></Button>
+          {/* <ToHome screenName="Home"/> */}
           <ToRegister screenName="Register"/>
         </Content>
       </Container>
@@ -99,7 +108,9 @@ function ToRegister({ screenName }) {
 function ToHome({ screenName }) {
   const navigation = useNavigation();
   return (
+    // <Button rounded block danger title="Login"
+    // onPress={() => navigation.navigate(screenName)} style={{ marginBottom: '5%' }}><Text>Login</Text></Button>
     <Button rounded block danger title="Login"
-    onPress={() => navigation.navigate(screenName)} style={{ marginBottom: '5%' }}><Text>Login</Text></Button>
+    onPress={this.login.bind(this)} style={{ marginBottom: '5%' }}><Text>Login</Text></Button>
   );
 }

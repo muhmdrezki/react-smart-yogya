@@ -7,27 +7,30 @@ import ProfilePage from '../pages/ProfilePage';
 import BroadcastPage from '../pages/BroadcastPage';
 import SettingsPage from '../pages/SettingsPage';
 
+import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 import { API_URL } from 'react-native-dotenv'
 
 class MainContent extends Component {
 
   getArticles() {
-    var config = {
-      headers : {
-        "Authorization" : "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wveW9neWEudGVjaHNvbHV0aW9uaWQuY29tXC9hcGlcL2xvZ2luIiwiaWF0IjoxNTg0MjAyNjk3LCJleHAiOjE1ODQyMDYyOTcsIm5iZiI6MTU4NDIwMjY5NywianRpIjoiaUdzbUpBMlJoejJhYVNPcCIsInN1YiI6MTEsInBydiI6Ijg3ZTBhZjFlZjlmZDE1ODEyZmRlYzk3MTUzYTE0ZTBiMDQ3NTQ2YWEifQ.IBC8bxlq4T-F4g7q2sVzyWXIdrsbvjF573U_vuX9mAg"
+    AsyncStorage.getItem('token', (err, result) => {
+      var config = {
+        headers : {
+          "Authorization" : "Bearer " + result
+        }
       }
-    }
-    axios.get( API_URL + 'articles', config)
-    .then(res => {
-      if(res.data.status) {
-        this.setState({
-          newest_articles : res.data.data
-        });
-      }
-    }).catch(err => {
-      alert(err);
-    })
+      axios.get( API_URL + 'articles', config)
+      .then(res => {
+        if(res.data.status) {
+          this.setState({
+            newest_articles : res.data.data
+          });
+        }
+      }).catch(err => {
+        alert(err);
+      })
+    });
   }
 
   constructor(props) {
@@ -56,7 +59,7 @@ class MainContent extends Component {
   }
 
   componentWillMount() {
-    // this.getArticles();
+    this.getArticles();
   };
 
   render() {
@@ -144,7 +147,7 @@ export default class Home extends Component {
         return (<Content><BroadcastPage/></Content>);
         break;
       case 'setting':
-        return (<Content><SettingsPage/></Content>);
+        return (<Content><SettingsPage navigation={this.props.navigation}></SettingsPage></Content>);
         break;
       default:
     }

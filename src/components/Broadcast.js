@@ -2,27 +2,30 @@ import React, { Component } from 'react';
 import {ScrollView} from 'react-native';
 import { Container, H2, Content, Button, ListItem, Text, Left, Body, Right, List, Thumbnail } from 'native-base';
 
+import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 import { API_URL } from 'react-native-dotenv'
 
 export default class BroadcastPage extends Component {
 
   getBroadCast() {
-    var config = {
-      headers : {
-        "Authorization" : "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wveW9neWEudGVjaHNvbHV0aW9uaWQuY29tXC9hcGlcL2xvZ2luIiwiaWF0IjoxNTg0MjAyNjk3LCJleHAiOjE1ODQyMDYyOTcsIm5iZiI6MTU4NDIwMjY5NywianRpIjoiaUdzbUpBMlJoejJhYVNPcCIsInN1YiI6MTEsInBydiI6Ijg3ZTBhZjFlZjlmZDE1ODEyZmRlYzk3MTUzYTE0ZTBiMDQ3NTQ2YWEifQ.IBC8bxlq4T-F4g7q2sVzyWXIdrsbvjF573U_vuX9mAg"
+    AsyncStorage.getItem('token', (err, result) => {
+      var config = {
+        headers : {
+          "Authorization" : "Bearer " + result
+        }
       }
-    }
-    axios.get( API_URL + 'broadcast', config)
-    .then(res => {
-      if(res.data.status) {
-        this.setState({
-          broadcast_list : res.data.data
-        });
-      }
-    }).catch(err => {
-      alert(err);
-    })
+      axios.get( API_URL + 'broadcast', config)
+      .then(res => {
+        if(res.data.status) {
+          this.setState({
+            broadcast_list : res.data.data
+          });
+        }
+      }).catch(err => {
+        alert(err);
+      })
+    });
   }
 
   constructor(props) {
@@ -38,7 +41,7 @@ export default class BroadcastPage extends Component {
   }
 
   componentWillMount() {
-    // this.getBroadCast();  
+    this.getBroadCast();  
   }
 
   render() {

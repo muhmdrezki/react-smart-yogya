@@ -19,7 +19,7 @@ import Home from "./src/pages/HomePage";
 class HomeScreen extends Component {
   render() {
     return (
-      <Home/>
+      <Home navigation={this.props.navigation}/>
     );
   }
 }
@@ -27,7 +27,7 @@ class HomeScreen extends Component {
 class LoginScreen extends Component {
   render() {
     return (
-      <LoginPage/>
+      <LoginPage navigation={this.props.navigation}/>
     );
   }
 }

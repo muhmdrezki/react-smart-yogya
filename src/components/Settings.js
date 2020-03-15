@@ -1,6 +1,32 @@
 import React, { Component } from 'react';
+import {Alert} from 'react-native';
 import { Container, H2, Content, Button, ListItem, Text, Icon, Left, Body, Right, Switch } from 'native-base';
-export default class SettingsPage extends Component {
+import AsyncStorage from '@react-native-community/async-storage';
+export default class Settings extends Component {
+
+  constructor(props) {
+    super(props);
+    
+  }
+
+  logout() {
+    Alert.alert(
+      'Warning',
+      'Yakin akan logout ?',
+      [
+        {text: 'Tidak'},
+        {text: 'OK', onPress: () => this.logoutProcess()},
+      ],
+      {cancelable: false},
+    );
+  }
+
+  logoutProcess() {
+    AsyncStorage.removeItem('token', (err, res) => {
+      this.props.navigation.navigate("Login")
+    });
+  }
+
   render() {
     const titlePage = {
       marginTop: '4%',
@@ -13,20 +39,7 @@ export default class SettingsPage extends Component {
       <Container>
         <Content>
           <H2 style={titlePage}> Pengaturan </H2>
-          <ListItem icon>
-            <Left>
-              <Button style={{ backgroundColor: "#FF0000" }}>
-                <Icon active name="notifications" />
-              </Button>
-            </Left>
-            <Body>
-              <Text>Notifications</Text>
-            </Body>
-            <Right>
-              <Switch value={false} />
-            </Right>
-          </ListItem>
-          <ListItem icon>
+          <ListItem icon onPress={this.logout.bind(this)}>
             <Left>
               <Button style={{ backgroundColor: "#007AFF" }}>
                 <Icon active name="power" />
