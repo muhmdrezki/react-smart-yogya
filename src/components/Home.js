@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Image, SafeAreaView, ScrollView, Settings, StyleSheet  } from 'react-native'; 
-import { Container, Content, List, ListItem, Right, Button, H2, Card, CardItem, Left, Thumbnail, Body, Text, Badge, Icon, Footer, FooterTab } from 'native-base';
+import { Container, Spinner, Content, List, ListItem, Right, Button, H2, Card, CardItem, Left, Thumbnail, Body, Text, Badge, Icon, Footer, FooterTab } from 'native-base';
 import { SliderBox } from "react-native-image-slider-box";
 
 import ProfilePage from '../pages/ProfilePage';
@@ -23,13 +23,33 @@ class MainContent extends Component {
       axios.get( API_URL + 'articles', config)
       .then(res => {
         if(res.data.status) {
-          this.setState({
-            newest_articles : res.data.data
-          });
+          this.setState({ newest_articles : res.data.data });
+          this.setState({ newest_load: false });
         }
       }).catch(err => {
         alert(err);
       })
+    });
+  }
+
+  getBroadcast() {
+    AsyncStorage.getItem('token', (err, result) => {
+      if(result) {
+        var config = {
+          headers : {
+            "Authorization" : "Bearer " + result
+          }
+        }
+        axios.get( API_URL + 'broadcast-home', config).
+        then(res => {
+          if(res.data.status) {
+            this.setState({ other_articles: res.data.data })
+            this.setState({ other_load: false });
+          }
+        }).catch(err => {
+          alert(err);
+        })
+      }
     });
   }
 
@@ -42,24 +62,16 @@ class MainContent extends Component {
         "https://source.unsplash.com/1280x720/?girl",
         "https://source.unsplash.com/1280x720/?tree"
       ],
-      newest_articles: [
-        { id: 1, image: "https://source.unsplash.com/1280x720/?nature" },
-        { id: 2, image: "https://source.unsplash.com/1280x720/?water" },
-        { id: 3, image: "https://source.unsplash.com/1280x720/?girl" },
-        { id: 4, image: "https://source.unsplash.com/1280x720/?tree" }
-      ],
       newest_articles: [],
-      other_articles : [
-        { id: 1, image: "https://source.unsplash.com/1280x720/?nature" },
-        { id: 2, image: "https://source.unsplash.com/1280x720/?water" },
-        { id: 3, image: "https://source.unsplash.com/1280x720/?girl" },
-        { id: 4, image: "https://source.unsplash.com/1280x720/?tree" },
-      ]
+      newest_load: true,
+      other_articles : [],
+      other_load: true
     }
   }
 
   componentWillMount() {
     this.getArticles();
+    this.getBroadcast();
   };
 
   render() {
@@ -76,7 +88,7 @@ class MainContent extends Component {
       <Content>
         <SliderBox images={this.state.carousel} sliderBoxHeight={250} />
         <H2 style={titlePage}> Artikel Baru </H2>
-        <SafeAreaView>
+        { this.state.newest_load ? <Spinner color="red"/> : <SafeAreaView>
           <ScrollView horizontal>
           { this.state.newest_articles.map((item, index) => {
             return (
@@ -87,8 +99,8 @@ class MainContent extends Component {
                 <CardItem>
                   <Left>
                     <Body>
-                      <Text> { item.title } </Text>
-                      <Text note> Article's Body </Text>
+                      <Text> { item.truncated_title } </Text>
+                      <Text note> { item.truncated_body } </Text>
                     </Body>
                   </Left>
                 </CardItem>
@@ -96,10 +108,10 @@ class MainContent extends Component {
             );
           }) }
           </ScrollView>
-        </SafeAreaView>
+        </SafeAreaView> }
         <H2 style={titlePage}> Pengumuman Terbaru </H2>
           <ScrollView>
-          { this.state.other_articles.map((item, key) => {
+          { this.state.other_load ? <Spinner color="red"/> : this.state.other_articles.map((item, key) => {
             return (
               <List key={item.id}>
                 <ListItem thumbnail>
@@ -107,8 +119,8 @@ class MainContent extends Component {
                     <Thumbnail square source={{ uri: item.image }} />
                   </Left>
                   <Body>
-                    <Text> Article's Title </Text>
-                    <Text note numberOfLines={1}>Its time to build a difference . .</Text>
+                    <Text>{item.title}</Text>
+                    <Text note numberOfLines={1}>{item.body}</Text>
                   </Body>
                   <Right>
                     <Button transparent>

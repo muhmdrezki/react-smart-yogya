@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {ScrollView} from 'react-native';
-import { Container, H2, Content, Button, ListItem, Text, Left, Body, Right, List, Thumbnail } from 'native-base';
+import { Container, H2, Spinner, Content, Button, ListItem, Text, Left, Body, Right, List, Thumbnail } from 'native-base';
 
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
@@ -18,9 +18,8 @@ export default class BroadcastPage extends Component {
       axios.get( API_URL + 'broadcast', config)
       .then(res => {
         if(res.data.status) {
-          this.setState({
-            broadcast_list : res.data.data
-          });
+          this.setState({ broadcast_list : res.data.data });
+          this.setState({ broadcast_load : false })
         }
       }).catch(err => {
         alert(err);
@@ -31,6 +30,7 @@ export default class BroadcastPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      broadcast_load: true,
       broadcast_list : [
         { id: 1, image: "https://source.unsplash.com/1280x720/?nature" },
         { id: 2, image: "https://source.unsplash.com/1280x720/?water" },
@@ -57,7 +57,7 @@ export default class BroadcastPage extends Component {
         <Content>
           <H2 style={titlePage}> Pengumuman </H2>
           <ScrollView>
-          { this.state.broadcast_list.map((item) => {
+          { this.state.broadcast_load ? <Spinner color="red"/> : this.state.broadcast_list.map((item) => {
             return (
               <List key={item.id}>
                 <ListItem thumbnail>

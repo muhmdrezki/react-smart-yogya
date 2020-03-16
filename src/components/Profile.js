@@ -97,7 +97,7 @@ export default class Profile extends Component {
     return (
       <Container>
         <View style={{ alignItems: 'center', justifyContents: 'center', backgroundColor: '#F5F5F5' }}>
-          <Image source={{uri: "https://source.unsplash.com/1280x720/?girl"}} style={{ width: 200, height: 200, borderRadius: 100, marginTop: '5%', marginBottom: '5%' }}/>
+          <Image source={{uri: "https://i.pravatar.cc/150?img=3"}} style={{ width: 200, height: 200, borderRadius: 100, marginTop: '5%', marginBottom: '5%' }}/>
           <H1 style={personName}> { this.state.user.name ? this.state.user.name : '' } </H1>
           <H3 style={personAddress}> { this.state.user.city ? this.state.user.city : '' } </H3>
         </View>
