@@ -10,6 +10,7 @@ import SettingsPage from '../pages/SettingsPage';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 import { API_URL } from 'react-native-dotenv'
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 class MainContent extends Component {
 
@@ -27,7 +28,9 @@ class MainContent extends Component {
           this.setState({ newest_load: false });
         }
       }).catch(err => {
-        alert(err);
+        if(err.response.status) {
+          this.props.navigation.navigate("Login");
+        }
       })
     });
   }
@@ -47,10 +50,22 @@ class MainContent extends Component {
             this.setState({ other_load: false });
           }
         }).catch(err => {
-          alert(err);
+          if(err.response.status) {
+            this.props.navigation.navigate("Login");
+          }
         })
       }
     });
+  }
+
+  detail = async(id) => {
+    try {
+      await AsyncStorage.setItem('articleId', JSON.stringify(id));
+      this.props.navigation.navigate("ArticleDetail");
+    } catch (error) {
+      // Error saving data
+      console.log(error);
+    }
   }
 
   constructor(props) {
@@ -92,19 +107,21 @@ class MainContent extends Component {
           <ScrollView horizontal>
           { this.state.newest_articles.map((item, index) => {
             return (
-              <Card key={item.id}>
-                <CardItem cardBody>
-                  <Image source={{uri: item.image}} style={{height: 150, width: null, flex: 1}}/>
-                </CardItem>
-                <CardItem>
-                  <Left>
-                    <Body>
-                      <Text> { item.truncated_title } </Text>
-                      <Text note> { item.truncated_body } </Text>
-                    </Body>
-                  </Left>
-                </CardItem>
-              </Card>
+                <Card key={item.id}>
+                  <TouchableOpacity onPress={ () => this.detail(item.id)}>
+                    <CardItem cardBody>
+                      <Image source={{uri: item.image}} style={{height: 150, width: null, flex: 1}}/>
+                    </CardItem>
+                    <CardItem>
+                      <Left>
+                        <Body>
+                          <Text> { item.truncated_title } </Text>
+                          <Text note> { item.truncated_body } </Text>
+                        </Body>
+                      </Left>
+                    </CardItem>
+                  </TouchableOpacity>
+                </Card>
             );
           }) }
           </ScrollView>
@@ -150,7 +167,7 @@ export default class Home extends Component {
   renderSelectedTab() {
     switch (this.state.selected_tab) {
       case 'home' :
-        return (<MainContent/>);
+        return (<MainContent navigation={this.props.navigation}/>);
         break;
       case 'profile':
         return (<Content><ProfilePage/></Content>);

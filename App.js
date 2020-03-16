@@ -15,6 +15,7 @@ import { Container } from 'native-base';
 import LoginPage from "./src/pages/LoginPage";
 import Register from "./src/pages/Signup";
 import Home from "./src/pages/HomePage";
+import ArticleDetailPage from './src/pages/ArticleDetailPage';
 
 class HomeScreen extends Component {
   render() {
@@ -36,6 +37,14 @@ class RegisterScreen extends Component {
   render() {
     return (
       <Register navigation={this.props.navigation}/>
+    );
+  }
+}
+
+class ArticleDetailScreen extends Component {
+  render() {
+    return (
+      <ArticleDetailPage/>
     );
   }
 }
@@ -67,6 +76,14 @@ export default class App extends React.Component {
               headerLeft: null
             }}
           />
+          <stack.Screen name="ArticleDetail" component={ArticleDetailScreen}
+           options={{ 
+            headerTitleStyle: { fontSize: 25,
+              fontFamily : Platform.OS === 'android' ? 'sans-serif-light' : undefined
+            },
+            title: "YOGYAKARTA SMART CITY",
+            headerTitleAlign:"center"
+          }}/>
           </stack.Navigator>
         </NavigationContainer>
       </Container>
