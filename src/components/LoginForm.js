@@ -64,6 +64,14 @@ class FormLogin extends React.Component {
     }
   }
 
+  componentDidMount() {
+    AsyncStorage.getItem('token', (err, res) => {
+      if(res) {
+        this.props.navigation.navigate("Home")
+      }
+    });
+  }
+
   render() {
     /* styling */
     const appContainer = {
