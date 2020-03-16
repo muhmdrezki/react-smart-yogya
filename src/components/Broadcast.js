@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {ScrollView} from 'react-native';
+import {ScrollView, TouchableOpacity} from 'react-native';
 import { Container, H2, Spinner, Content, Button, ListItem, Text, Left, Body, Right, List, Thumbnail } from 'native-base';
 
 import AsyncStorage from '@react-native-community/async-storage';
@@ -25,6 +25,15 @@ export default class BroadcastPage extends Component {
         alert(err);
       })
     });
+  }
+  detailBroadcast = async(id) => {
+    try {
+      await AsyncStorage.setItem('broadcastId', JSON.stringify(id));
+      this.props.navigation.navigate("BroadcastDetail");
+    } catch (error) {
+      // Error saving data
+      console.log(error);
+    }
   }
 
   constructor(props) {
@@ -65,12 +74,14 @@ export default class BroadcastPage extends Component {
                     <Thumbnail square source={{ uri: item.image }} />
                   </Left>
                   <Body>
-                    <Text> {item.title} </Text>
-                    <Text note numberOfLines={1}> {item.body} </Text>
+                    <Text>{item.title}</Text>
+                    <Text note numberOfLines={1}>{item.body}</Text>
                   </Body>
                   <Right>
                     <Button transparent>
-                      <Text>Read More </Text>
+                      <TouchableOpacity onPress={ () => this.detailBroadcast(item.id)}>
+                        <Text>Read More </Text>
+                      </TouchableOpacity>
                     </Button>
                   </Right>
                 </ListItem>

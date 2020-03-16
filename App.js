@@ -16,6 +16,7 @@ import LoginPage from "./src/pages/LoginPage";
 import Register from "./src/pages/Signup";
 import Home from "./src/pages/HomePage";
 import ArticleDetailPage from './src/pages/ArticleDetailPage';
+import BroadcastDetailPage from './src/pages/BroadcastDetailPage';
 
 class HomeScreen extends Component {
   render() {
@@ -49,6 +50,14 @@ class ArticleDetailScreen extends Component {
   }
 }
 
+class BroadcastDetailScreen extends Component {
+  render() {
+    return (
+      <BroadcastDetailPage/>
+    );
+  }
+}
+
 const stack = createStackNavigator();
 export default class App extends React.Component {
   componentDidMount() {
@@ -77,6 +86,14 @@ export default class App extends React.Component {
             }}
           />
           <stack.Screen name="ArticleDetail" component={ArticleDetailScreen}
+           options={{ 
+            headerTitleStyle: { fontSize: 25,
+              fontFamily : Platform.OS === 'android' ? 'sans-serif-light' : undefined
+            },
+            title: "YOGYAKARTA SMART CITY",
+            headerTitleAlign:"center"
+          }}/>
+          <stack.Screen name="BroadcastDetail" component={BroadcastDetailScreen}
            options={{ 
             headerTitleStyle: { fontSize: 25,
               fontFamily : Platform.OS === 'android' ? 'sans-serif-light' : undefined

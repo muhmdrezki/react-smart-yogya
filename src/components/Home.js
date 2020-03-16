@@ -67,6 +67,15 @@ class MainContent extends Component {
       console.log(error);
     }
   }
+  detailBroadcast = async(id) => {
+    try {
+      await AsyncStorage.setItem('broadcastId', JSON.stringify(id));
+      this.props.navigation.navigate("BroadcastDetail");
+    } catch (error) {
+      // Error saving data
+      console.log(error);
+    }
+  }
 
   constructor(props) {
     super(props);
@@ -141,7 +150,9 @@ class MainContent extends Component {
                   </Body>
                   <Right>
                     <Button transparent>
-                      <Text>Read More </Text>
+                      <TouchableOpacity onPress={ () => this.detailBroadcast(item.id)}>
+                        <Text>Read More </Text>
+                      </TouchableOpacity>
                     </Button>
                   </Right>
                 </ListItem>
@@ -173,7 +184,7 @@ export default class Home extends Component {
         return (<Content><ProfilePage/></Content>);
         break;
       case 'broadcast':
-        return (<Content><BroadcastPage/></Content>);
+        return (<Content><BroadcastPage navigation={this.props.navigation}/></Content>);
         break;
       case 'setting':
         return (<Content><SettingsPage navigation={this.props.navigation}></SettingsPage></Content>);
