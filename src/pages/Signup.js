@@ -4,7 +4,7 @@ import Register from '../components/Register'
 export default class Signup extends Component {
   render() {
     return (
-      <Register/>
+      <Register navigation={this.props.navigation}/>
     );
   }
 }

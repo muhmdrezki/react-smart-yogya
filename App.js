@@ -35,7 +35,7 @@ class LoginScreen extends Component {
 class RegisterScreen extends Component {
   render() {
     return (
-      <Register/>
+      <Register navigation={this.props.navigation}/>
     );
   }
 }
